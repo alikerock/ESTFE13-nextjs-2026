@@ -1,6 +1,10 @@
 "use client";
+import { useRouter } from "next/navigation";
+
 export default function Create() {
   console.log("Create Page 작동");
+  const router = useRouter();
+
   return (
     <>
       <h3 style={styles.title}>Create Form</h3>
@@ -10,6 +14,19 @@ export default function Create() {
           e.preventDefault();
           const title = e.target.title.value;
           const message = e.target.message.value;
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ title, message }), //"title": "제목", "message": "설명"
+          };
+          fetch("http://localhost:9999/topics", options)
+            .then(res => res.json())
+            .then(result => {
+              router.push(`/read/${result.id}`);
+              router.refresh();
+            });
         }}
       >
         <div className="mb-3">

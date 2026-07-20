@@ -24,6 +24,7 @@ export default async function RootLayout({ children }) {
   //     });
   // }, []);
   // console.log(topics);
+
   const response = await fetch("http://localhost:9999/topics");
   const topics = await response.json();
 
